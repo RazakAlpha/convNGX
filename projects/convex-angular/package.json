@@ -1,6 +1,6 @@
 {
-  "name": "convngx",
-  "version": "0.2.0",
+  "name": "@razakalpha/convngx",
+  "version": "0.2.1",
   "peerDependencies": {
     "@angular/common": "^20.1.0",
     "@angular/core": "^20.1.0",

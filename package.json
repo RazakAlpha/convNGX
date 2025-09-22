@@ -3,9 +3,10 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
+    "start": "ng serve example-chat",
+    "build": "ng build alpha-convngx",
+    "build:example": "ng build example-chat",
+    "watch": "ng build alpha-convngx --watch --configuration development",
     "test": "ng test",
     "dev": "convex dev"
   },
@@ -29,9 +30,9 @@
     "@angular/forms": "^20.1.0",
     "@angular/platform-browser": "^20.1.0",
     "@angular/router": "^20.1.0",
-    "@convex-dev/better-auth": "^0.7.14",
-    "better-auth": "^1.3.6",
-    "convex": "^1.25.4",
+    "@convex-dev/better-auth": "^0.7.18",
+    "better-auth": "^1.3.8",
+    "convex": "^1.27.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"

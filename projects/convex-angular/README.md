@@ -1,4 +1,4 @@
-# convNGX
+# @razakalpha/convngx
 
 Angular-first utilities for Convex with Better Auth:
 - DI-wrapped Convex client with Better Auth token refresh
@@ -8,13 +8,17 @@ Angular-first utilities for Convex with Better Auth:
 
 Demo app: projects/example-chat (Angular + Convex + Better Auth)
 
-## Install peer deps
+## Installation
 
-Use your app's package.json; this library provides Angular wrappers and expects Convex + Better Auth to be available.
+Install the package and its peer dependencies:
 
 ```bash
-npm i convex @convex-dev/better-auth better-auth
+npm install @razakalpha/convngx convex @convex-dev/better-auth better-auth
 ```
+
+### Peer Dependencies
+
+This library provides Angular wrappers and expects Convex + Better Auth to be available in your project.
 ## Assumptions
 
 This library assumes your Convex backend uses Better Auth (via `@convex-dev/better-auth`) and exposes the Better Auth HTTP endpoints on your Convex site (e.g. `https://YOUR.convex.site`). The Angular providers wire the Convex client to Better Auth, handle proactive token refresh, and optionally support cross‑domain OTT handoff.
@@ -25,7 +29,7 @@ Register the provider once in your bootstrap:
 
 ```ts
 import { bootstrapApplication } from '@angular/platform-browser';
-import { provideConvexAngular } from 'convngx';
+import { provideConvexAngular } from '@razakalpha/convngx';
 import { AppComponent } from './app';
 
 bootstrapApplication(AppComponent, {
@@ -45,7 +49,7 @@ bootstrapApplication(AppComponent, {
 Inject the Convex client anywhere:
 
 ```ts
-import { injectConvex } from 'convngx';
+import { injectConvex } from '@razakalpha/convngx';
 
 const convex = injectConvex();
 // convex.query(...), convex.watchQuery(...), convex.mutation(...), convex.action(...)
@@ -58,7 +62,7 @@ Angular Resource wrapper around Convex watchQuery with smart gating, keep-last, 
 Core usage:
 
 ```ts
-import { convexLiveResource } from 'convngx';
+import { convexLiveResource } from '@razakalpha/convngx';
 import { api } from '@/convex/_generated/api';
 
 // Live updated with angular resource api
@@ -110,7 +114,7 @@ function convexLiveResource<Q extends FunctionReference<'query'>>(
 
 Global default for keep mode (optional DI)
 ```ts
-import { provideConvexResourceOptions } from 'convngx';
+import { provideConvexResourceOptions } from '@razakalpha/convngx';
 
 bootstrapApplication(App, {
   providers: [
@@ -126,7 +130,7 @@ Implementation: src/lib/resources/live.resource.ts
 A mutation helper that returns an imperative `run()` plus resource-shaped state and derived signals. Supports optimistic updates, callbacks, basic concurrency controls, and retries.
 
 ```ts
-import { convexMutationResource } from 'convngx';
+import { convexMutationResource } from '@razakalpha/convngx';
 import { api } from '@/convex/_generated/api';
 
 // Minimal
@@ -182,7 +186,7 @@ Implementation: src/lib/resources/mutation.resource.ts
 Identical ergonomics to mutations but calls `convex.action`. Useful for long-running or external API calls.
 
 ```ts
-import { convexActionResource } from 'convngx';
+import { convexActionResource } from '@razakalpha/convngx';
 import { api } from '@/convex/_generated/api';
 
 const exportData = convexActionResource(api.reports.export, {
@@ -238,7 +242,7 @@ Example service (from the chat app) that derives a reactive `isAuthenticated`:
 ```ts
 // projects/example-chat/src/app/state/convex-auth.state.ts
 import { Injectable, computed, inject, signal } from '@angular/core';
-import { CONVEX, type ConvexAngularClient } from 'convngx';
+import { CONVEX, type ConvexAngularClient } from '@razakalpha/convngx';
 
 @Injectable({ providedIn: 'root' })
 export class ConvexAuthState {
@@ -271,7 +275,7 @@ Snippet from the chat component:
 
 ```ts
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { convexLiveResource, convexMutationResource } from 'convngx';
+import { convexLiveResource, convexMutationResource } from '@razakalpha/convngx';
 import { api } from 'convex/_generated/api';
 
 @Component({ /* ... */ })
@@ -307,7 +311,7 @@ export class ChatComponent {
 ## Build
 
 ```bash
-ng build convngx-angular
+ng build alpha-convngx
 ```
 
 Outputs to dist/convngx.
