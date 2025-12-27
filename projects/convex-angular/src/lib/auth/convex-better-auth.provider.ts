@@ -47,8 +47,29 @@ export function provideConvexBetterAuth(opts: ConvexBetterAuthOptions): Provider
 
         const fetchAccessToken: FetchAccessToken = async ({ forceRefreshToken }) => {
           if (!forceRefreshToken) return null;
-          const { data } = await auth.convex.token();
-          return data?.token ?? null;
+
+          // Retry logic for transient failures (e.g., session not fully propagated)
+          let lastError: any;
+          for (let attempt = 0; attempt < 3; attempt++) {
+            try {
+              if (attempt > 0) {
+                // Wait before retry: 50ms, then 100ms
+                const delay = attempt * 50;
+                await new Promise((resolve) => setTimeout(resolve, delay));
+              }
+
+              const { data } = await auth.convex.token();
+              return data?.token ?? null;
+            } catch (err: any) {
+              lastError = err;
+              // Only retry on "Failed to fetch" errors
+              if (attempt < 2 && err?.message === 'Failed to fetch') {
+                continue;
+              }
+              throw err;
+            }
+          }
+          throw lastError;
         };
 
         client.setAuth(fetchAccessToken);
