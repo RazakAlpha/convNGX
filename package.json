@@ -8,7 +8,9 @@
     "build:example": "ng build example-chat",
     "watch": "ng build alpha-convngx --watch --configuration development",
     "test": "ng test",
-    "dev": "convex dev"
+    "dev": "convex dev",
+    "prepublish:lib": "npm run build",
+    "publish:lib": "npm run prepublish:lib && cd dist/convngx && npm publish --access public"
   },
   "prettier": {
     "printWidth": 100,
